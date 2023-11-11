@@ -4,7 +4,9 @@ import * as CrudService from './crud/service';
 
 // api router - TODO move this to its own module
 const router = express.Router();
+
 router.get('/', async (req: Request, res: Response) => {
+    console.log("reach home page");
     try {
         const todoList: TodoItem[] = await CrudService.getTodoList();
         res.status(200).send(todoList);
@@ -12,6 +14,18 @@ router.get('/', async (req: Request, res: Response) => {
         res.status(500).send(e.message);
     }
 });
+
+
+router.post('/new', async (req:Request, res: Response) => {
+    try {
+        const {title, category, description} = req.body;
+        const newTodoItem = await CrudService.addTodoItem(title, category, description);
+        res.status(201).json(newTodoItem);
+    } catch (e) {
+        res.status(500).send(e.message);
+    }
+    
+})
 
 // app
 const port = 3000;
