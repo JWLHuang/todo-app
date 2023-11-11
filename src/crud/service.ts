@@ -21,4 +21,10 @@ export const addTodoItem = async (title: string, category: CATEGORY, description
     return newTodoItem;
 }
 
-export const findToDoItem = async (id: number): Promise<TodoItem> => todoList[id];
+export const findTodoItem = async (id: number): Promise<TodoItem> => todoList[id];
+
+export const updateTodoItem = async (id: number, updatedItem: TodoItem): Promise<TodoItem> => {
+    const toUpdate = todoList[id];
+    Object.assign(toUpdate, {...updatedItem, updateDate: Date.now()});
+    return toUpdate;
+}

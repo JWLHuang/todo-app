@@ -6,7 +6,6 @@ import * as CrudService from './crud/service';
 const router = express.Router();
 
 router.get('/', async (req: Request, res: Response) => {
-    console.log("reach home page");
     try {
         const todoList: TodoItem[] = await CrudService.getTodoList();
         res.status(200).send(todoList);
@@ -16,12 +15,14 @@ router.get('/', async (req: Request, res: Response) => {
 });
 
 router.get('/:id' , async (req: Request, res: Response) => {
+    try {
     const idNumber: number = parseInt(req.params.id);
-    const foundTodoItem = await CrudService.findToDoItem(idNumber);
-    console.log(foundTodoItem);
+    const foundTodoItem = await CrudService.findTodoItem(idNumber);
     res.status(200).send(foundTodoItem);
-
-})
+    } catch (e) {
+        res.status(500).send(e.message);
+    }
+});
 
 router.post('/new', async (req:Request, res: Response) => {
     try {
@@ -31,8 +32,18 @@ router.post('/new', async (req:Request, res: Response) => {
     } catch (e) {
         res.status(500).send(e.message);
     }
-    
-})
+});
+
+router.put('/:id', async (req: Request, res: Response) => {
+    try {
+    const idToUpdate: number = parseInt(req.params.id);
+    const infoToUpdate: TodoItem = { id: idToUpdate, ...req.body };
+    const updatedItem = await CrudService.updateTodoItem(idToUpdate, infoToUpdate);
+    res.status(200).json(updatedItem);
+    } catch (e) {
+        res.status(500).send(e.message);
+    }
+});
 
 // app
 const port = 3000;
