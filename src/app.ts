@@ -15,6 +15,13 @@ router.get('/', async (req: Request, res: Response) => {
     }
 });
 
+router.get('/:id' , async (req: Request, res: Response) => {
+    const idNumber: number = parseInt(req.params.id);
+    const foundTodoItem = await CrudService.findToDoItem(idNumber);
+    console.log(foundTodoItem);
+    res.status(200).send(foundTodoItem);
+
+})
 
 router.post('/new', async (req:Request, res: Response) => {
     try {

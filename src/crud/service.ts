@@ -20,3 +20,5 @@ export const addTodoItem = async (title: string, category: CATEGORY, description
     console.log("Added" + newTodoItem);
     return newTodoItem;
 }
+
+export const findToDoItem = async (id: number): Promise<TodoItem> => todoList[id];
