@@ -24,7 +24,7 @@ router.get('/:id' , async (req: Request, res: Response) => {
     }
 });
 
-router.post('/new', async (req:Request, res: Response) => {
+router.post('/new', async (req: Request, res: Response) => {
     try {
         const {title, category, description} = req.body;
         const newTodoItem = await CrudService.addTodoItem(title, category, description);
@@ -37,9 +37,19 @@ router.post('/new', async (req:Request, res: Response) => {
 router.put('/:id', async (req: Request, res: Response) => {
     try {
     const idToUpdate: number = parseInt(req.params.id);
-    const infoToUpdate: TodoItem = { id: idToUpdate, ...req.body };
+    const infoToUpdate: TodoItem = {id: idToUpdate, ...req.body};
     const updatedItem = await CrudService.updateTodoItem(idToUpdate, infoToUpdate);
     res.status(200).json(updatedItem);
+    } catch (e) {
+        res.status(500).send(e.message);
+    }
+});
+
+router.delete('/:id', async (req: Request, res: Response) => {
+    try {
+    const idToDelete: number = parseInt(req.params.id);
+    await CrudService.deleteTodoItem(idToDelete);
+    res.sendStatus(204);
     } catch (e) {
         res.status(500).send(e.message);
     }

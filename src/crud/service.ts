@@ -26,5 +26,15 @@ export const findTodoItem = async (id: number): Promise<TodoItem> => todoList[id
 export const updateTodoItem = async (id: number, updatedItem: TodoItem): Promise<TodoItem> => {
     const toUpdate = todoList[id];
     Object.assign(toUpdate, {...updatedItem, updateDate: Date.now()});
+    console.log("Updated" + toUpdate);
     return toUpdate;
+}
+
+export const deleteTodoItem = async (id: number): Promise<null | void> => {
+    const itemToDelete: TodoItem = await findTodoItem(id);
+    if (!itemToDelete) {
+        return null;
+    }
+    console.log("Deleted" + todoList[id]);
+    delete todoList[id];
 }
