@@ -5,12 +5,12 @@ export enum CATEGORY {
 }
 
 export interface TodoItemBase {
-    title: string;
-    category: CATEGORY;
-    description: string;
-    isCompleted: boolean;
-    createDate: number;
-    updateDate: number;
+    title?: string;
+    category?: CATEGORY;
+    description?: string;
+    isCompleted?: boolean;
+    createDate?: number;
+    updateDate?: number;
 }
 
 export interface TodoItem extends TodoItemBase {
