@@ -21,6 +21,8 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "dotenv": "^16.3.1",
+    "express": "^4.17.1",
+    "mongodb": "^6.2.0"
   }
 }
