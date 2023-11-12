@@ -6,6 +6,10 @@ import * as dotenv from "dotenv";
 // export const getTodoList = async (): Promise<TodoItem[]> => Object.values(todoList);
 export const collections: { todoList?: mongoDB.Collection } = {}
 
+export async function getTodoList() {
+    return await collections.todoList.find({}).toArray();
+}
+
 export async function connectToDatabase () {
    dotenv.config();
 
@@ -38,7 +42,7 @@ export const addTodoItem = async (title: string, category: CATEGORY, description
     return newTodoItem;
 }
 
-export const findTodoItem = async (id: number): Promise<TodoItem> => todoList[id];
+// export const findTodoItem = async (id: number): Promise<TodoItem> => todoList[id];
 
 export const updateTodoItem = async (id, updatedItem: TodoItem): Promise<TodoItem> => {
     const toUpdate: TodoItem = await collections.todoList.findOne(id);
@@ -47,11 +51,11 @@ export const updateTodoItem = async (id, updatedItem: TodoItem): Promise<TodoIte
     return toUpdate;
 }
 
-export const deleteTodoItem = async (id: number): Promise<null | void> => {
-    const itemToDelete: TodoItem = await findTodoItem(id);
-    if (!itemToDelete) {
-        return null;
-    }
-    console.log("Deleted" + todoList[id]);
-    delete todoList[id];
-}
+// export const deleteTodoItem = async (id: number): Promise<null | void> => {
+//     const itemToDelete: TodoItem = await findTodoItem(id);
+//     if (!itemToDelete) {
+//         return null;
+//     }
+//     console.log("Deleted" + todoList[id]);
+//     delete todoList[id];
+// }

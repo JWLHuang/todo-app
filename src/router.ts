@@ -9,7 +9,8 @@ router.use(express.json())
 router.get('/', async (req: Request, res: Response) => {
     try {
         // const todoList: TodoItem[] = await CrudService.getTodoList();
-        const todoList = await CrudService.collections.todoList.find({}).toArray();
+        // const todoList = await CrudService.collections.todoList.find({}).toArray();
+        const todoList = await CrudService.getTodoList();
         res.status(200).send(todoList);
     } catch (e) {
         res.status(500).send(e.message);

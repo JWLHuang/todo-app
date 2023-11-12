@@ -6,7 +6,7 @@ export enum CATEGORY {
     Other = 'OTHER',
 }
 
-export interface TodoItem extends WithId<Document>{
+export interface TodoItem extends WithId<Document> {
     _id: ObjectId;
     title?: string;
     category?: CATEGORY;
