@@ -23,7 +23,8 @@ router.get('/:id' , async (req: Request, res: Response) => {
     const query = { _id: new ObjectId(id) };
     // const query = {"_id" : idNumber} 
     // const foundTodoItem = await CrudService.findTodoItem(idNumber);
-    const foundTodoItem = await CrudService.collections.todoList.findOne(query);
+    // const foundTodoItem = await CrudService.collections.todoList.findOne(query);
+    const foundTodoItem = await CrudService.findTodoItem(query);
     res.status(200).send(foundTodoItem);
     } catch (e) {
         res.status(500).send(e.message);
