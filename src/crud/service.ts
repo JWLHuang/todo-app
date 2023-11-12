@@ -21,27 +21,27 @@ export async function connectToDatabase () {
 }
 
 export const addTodoItem = async (title: string, category: CATEGORY, description: string): Promise<TodoItem> => {
-    const newID: number = Object.keys(todoList).length + 1;
+    // const newID: number = Object.keys(todoList).length + 1;
     const currentDate: number = Date.now();
     const newTodoItem: TodoItem = {
-        id: newID,
         title,
         category,
         description,
         isCompleted: false,
         createDate: currentDate,
         updateDate: currentDate,
+        _id: null,
     };
 
-    todoList[newID] = newTodoItem;
-    console.log("Added" + newTodoItem);
+    // todoList[newID] = newTodoItem;
+    // console.log("Added" + newTodoItem);
     return newTodoItem;
 }
 
 export const findTodoItem = async (id: number): Promise<TodoItem> => todoList[id];
 
-export const updateTodoItem = async (id: number, updatedItem: TodoItem): Promise<TodoItem> => {
-    const toUpdate = todoList[id];
+export const updateTodoItem = async (id, updatedItem: TodoItem): Promise<TodoItem> => {
+    const toUpdate: TodoItem = await collections.todoList.findOne(id);
     Object.assign(toUpdate, {...updatedItem, updateDate: Date.now()});
     console.log("Updated" + toUpdate);
     return toUpdate;

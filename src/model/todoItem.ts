@@ -1,10 +1,13 @@
+import { WithId, Document, ObjectId } from "mongodb";
+
 export enum CATEGORY {
     Work = 'WORK',
     School = 'SCHOOL',
     Other = 'OTHER',
 }
 
-export interface TodoItemBase {
+export interface TodoItem extends WithId<Document>{
+    _id: ObjectId;
     title?: string;
     category?: CATEGORY;
     description?: string;
@@ -13,6 +16,6 @@ export interface TodoItemBase {
     updateDate?: number;
 }
 
-export interface TodoItem extends TodoItemBase {
-    id: number;
-}
+// export interface TodoItem extends TodoItemBase {
+//     id?: number;
+// }
