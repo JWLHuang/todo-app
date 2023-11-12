@@ -18,7 +18,9 @@ router.get('/', async (req: Request, res: Response) => {
 router.get('/:id' , async (req: Request, res: Response) => {
     try {
     const idNumber: number = parseInt(req.params.id);
-    const foundTodoItem = await CrudService.findTodoItem(idNumber);
+    const query = {id : idNumber} 
+    // const foundTodoItem = await CrudService.findTodoItem(idNumber);
+    const foundTodoItem = await CrudService.collections.todoList.findOne(query);
     res.status(200).send(foundTodoItem);
     } catch (e) {
         res.status(500).send(e.message);
