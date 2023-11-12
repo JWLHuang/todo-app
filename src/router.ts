@@ -35,8 +35,8 @@ router.post('/new', async (req: Request, res: Response) => {
     try {
         const {title, category, description} = req.body;
         const TodoItemToAdd = await CrudService.addTodoItem(title, category, description);
-        const newToDoItem = await CrudService.collections.todoList.insertOne(TodoItemToAdd);
-        res.status(201).json(newToDoItem);
+        // const newToDoItem = await CrudService.collections.todoList.insertOne(TodoItemToAdd);
+        res.status(201).json(TodoItemToAdd);
     } catch (e) {
         res.status(500).send(e.message);
     }

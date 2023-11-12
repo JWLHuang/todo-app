@@ -6,22 +6,29 @@ import * as dotenv from "dotenv";
 // export const getTodoList = async (): Promise<TodoItem[]> => Object.values(todoList);
 export const collections: { todoList?: mongoDB.Collection } = {}
 
-export async function getTodoList() {
-    return await collections.todoList.find({}).toArray();
-}
 
-export async function connectToDatabase () {
-   dotenv.config();
-
-   const client: mongoDB.MongoClient = new mongoDB.MongoClient(process.env.DB_CONN_STRING);
-
-   await client.connect();
-
-   const db: mongoDB.Db = client.db(process.env.DB_NAME);
-   const todoList: mongoDB.Collection = db.collection(process.env.COLLECTION_NAME);
-
+export const connectToDatabase = async () => {
+    dotenv.config();
+    
+    const client: mongoDB.MongoClient = new mongoDB.MongoClient(process.env.DB_CONN_STRING);
+    
+    await client.connect();
+    
+    const db: mongoDB.Db = client.db(process.env.DB_NAME);
+    const todoList: mongoDB.Collection = db.collection(process.env.COLLECTION_NAME);
+    
     collections.todoList = todoList;
     console.log(`Successfully connected to database: ${db.databaseName} and collection: ${todoList.collectionName}`);
+}
+
+
+export const getTodoList = async (): Promise<TodoItem[]> => {
+    return await collections.todoList.find({}).toArray();
+
+}
+
+export const findTodoItem = async (_id: mongoDB.Filter<mongoDB.BSON.Document>): Promise<TodoItem> => {
+    return await collections.todoList.findOne(_id);
 }
 
 export const addTodoItem = async (title: string, category: CATEGORY, description: string): Promise<TodoItem> => {
@@ -36,6 +43,7 @@ export const addTodoItem = async (title: string, category: CATEGORY, description
         updateDate: currentDate,
         _id: null,
     };
+    await collections.todoList.insertOne(newTodoItem);
 
     // todoList[newID] = newTodoItem;
     // console.log("Added" + newTodoItem);
@@ -43,9 +51,6 @@ export const addTodoItem = async (title: string, category: CATEGORY, description
 }
 
 // export const findTodoItem = async (id: number): Promise<TodoItem> => todoList[id];
-export async function findTodoItem (_id: mongoDB.Filter<mongoDB.BSON.Document>) {
-    return await collections.todoList.findOne(_id);
-}
 
 export const updateTodoItem = async (id, updatedItem: TodoItem): Promise<TodoItem> => {
     const toUpdate: TodoItem = await collections.todoList.findOne(id);
