@@ -3,7 +3,7 @@ import { CATEGORY, TodoItem } from "../model/todoItem";
 import * as mongoDB from "mongodb";
 import * as dotenv from "dotenv";
 
-export const getTodoList = async (): Promise<TodoItem[]> => Object.values(todoList);
+// export const getTodoList = async (): Promise<TodoItem[]> => Object.values(todoList);
 export const collections: { todoList?: mongoDB.Collection } = {}
 
 export async function connectToDatabase () {
