@@ -3,6 +3,15 @@ import { CATEGORY, TodoItem } from "../model/todoItem";
 import { collections } from "../db";
 
 export const getTodoList = async (findQuery = {}): Promise<TodoItem[]> => {
+    if ('title' in findQuery) {
+        findQuery['title'] = decodeURIComponent(findQuery['title'] as string);
+    }
+    if ('description' in findQuery) {
+        findQuery['description'] = decodeURIComponent(findQuery['description'] as string);
+    }
+    if ('isCompleted' in findQuery) {
+        findQuery['isCompleted'] = JSON.parse(findQuery['isCompleted'] as string);
+    }
     return await collections.todoList.find(findQuery).toArray();
 }
 
