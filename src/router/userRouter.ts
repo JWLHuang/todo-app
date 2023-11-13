@@ -21,7 +21,21 @@ userRouter.get('/:id', async (req: Request, res: Response) => {
         const userID = req.params.id;
         const query = { _id: new ObjectId(userID) };
         const foundUser = await UserService.findUser(query);
-        res.status(200).send(foundUser)
+        res.status(200).send(foundUser);
+    } catch (e) {
+        res.status(500).send(e.message);
+    }
+});
+
+userRouter.post('/new', async (req: Request, res: Response) => {
+    try {
+        const { login, password, role } = req.body;
+        const userToAdd = await UserService.register(login, password, role);
+        if (userToAdd === null) {
+            res.status(400).send(`Login already exists.`);
+        } else {
+            res.status(201).json(userToAdd);
+        }
     } catch (e) {
         res.status(500).send(e.message);
     }
