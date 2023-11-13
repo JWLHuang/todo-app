@@ -17,9 +17,10 @@ $ curl http://localhost:3000/api/todoList -i
 
 ## stack/technologies used
 
-- Typescript (Javascript ES6)
-- ExpressJS
-- MongoDB
+- typescript (javascript ES6)
+- express
+- mongodb
+- bcrypt
 
 ## references
 

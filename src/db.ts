@@ -1,7 +1,6 @@
 import * as mongoDB from "mongodb";
 import * as dotenv from "dotenv";
 
-
 export const collections: { todoList?: mongoDB.Collection, userList?: mongoDB.Collection } = {}
 
 export const connectToDatabase = async () => {

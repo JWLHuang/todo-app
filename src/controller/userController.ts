@@ -11,16 +11,37 @@ export const findUser = async (_id: mongoDB.Filter<mongoDB.BSON.Document>): Prom
     return await collections.userList.findOne(_id);
 }
 
-export const register = async (login: string, password: string, role: ROLE) => {
+export const createUser = async (login: string, password: string, role: ROLE) => {
     const user = await collections.userList.findOne({login: `${login}`});
     if (user) return null;
     const newUser: User = {
         login,
-        password: bcrypt.hashSync(password, 10),
+        password: hashPassword(password),
         role,
         _id: null,
     }
 
     await collections.userList.insertOne(newUser)
     return newUser;
+}
+
+export const updateUser = async (id: mongoDB.Filter<mongoDB.BSON.Document>, infoToUpdate: User): Promise<User> => {
+    if (infoToUpdate.password) {
+        infoToUpdate.password = hashPassword(infoToUpdate.password);
+    }
+    const userToUpdate: User = await collections.userList.findOne(id);
+    Object.assign(userToUpdate, {...infoToUpdate});
+    await collections.userList.updateOne(id, {$set: userToUpdate});
+    return userToUpdate;
+}
+
+export const deleteUser = async (id: mongoDB.Filter<mongoDB.BSON.Document>): Promise<mongoDB.DeleteResult> => {
+    const userToDelete = await collections.userList.deleteOne(id);
+    if (!userToDelete) return null;
+    console.log("Deleted" + id);
+    return userToDelete;
+}
+
+const hashPassword = (password: string): string => {
+    return bcrypt.hashSync(password, 10);
 }
