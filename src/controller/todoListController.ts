@@ -27,11 +27,12 @@ export const addTodoItem = async (userLogin: string, title: string, category: CA
     return newTodoItem;
 }
 
-export const updateTodoItem = async (id: mongoDB.Filter<mongoDB.BSON.Document>, updatedItem: TodoItem): Promise<TodoItem> => {
-    const toUpdate: TodoItem = await collections.todoList.findOne(id);
-    Object.assign(toUpdate, {...updatedItem, updateDate: Date.now()});
-    console.log("Updated" + toUpdate);
-    await collections.todoList.updateOne(id, { $set: toUpdate})
+export const updateTodoItem = async (query: mongoDB.Filter<mongoDB.BSON.Document>, updatedItem: TodoItem): Promise<TodoItem> => {
+    const toUpdate: TodoItem = await collections.todoList.findOne(query);
+    if (toUpdate !== null) {
+        Object.assign(toUpdate, {...updatedItem, updateDate: Date.now()});
+        await collections.todoList.updateOne(query, { $set: toUpdate})
+    }
     return toUpdate;
 }
 
@@ -40,6 +41,5 @@ export const deleteTodoItem = async (id: mongoDB.Filter<mongoDB.BSON.Document>):
     if (!itemToDelete) {
         return null;
     }
-    console.log("Deleted" + id);
     return itemToDelete;
 }

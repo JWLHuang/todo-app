@@ -38,7 +38,6 @@ export const updateUser = async (id: mongoDB.Filter<mongoDB.BSON.Document>, info
 export const deleteUser = async (id: mongoDB.Filter<mongoDB.BSON.Document>): Promise<mongoDB.DeleteResult> => {
     const userToDelete = await collections.userList.deleteOne(id);
     if (!userToDelete) return null;
-    console.log("Deleted" + id);
     return userToDelete;
 }
 

@@ -64,12 +64,15 @@ todoListRouter.delete('/item', async (req: Request, res: Response) => {
 const putItem = async (req: Request, res: Response) => {
     try {
         if (req.session.user) {
-            console.log(req.body);
             const userLogin = req.session.user.login;
             const query = { _id: new ObjectId(req.body.id), userLogin };
             const infoToUpdate: TodoItem = {...req.body, userLogin };
             const updatedItem = await TodoListService.updateTodoItem(query, infoToUpdate);
-            res.status(200).json(updatedItem);
+            if (updatedItem === null) {
+                res.status(404).send(`todoItem with id ${query._id} does not exist`);
+            } else {
+                res.status(200).json(updatedItem);
+            }
         } else {
             res.status(403).send('You are not authorized to modify the todoList');
         }
@@ -81,9 +84,8 @@ const putItem = async (req: Request, res: Response) => {
 const deleteItem = async (req: Request, res: Response) => {
     try {
         if (req.session.user) {
-            console.log(req.body);
             const id = req.body.id;
-            const idToDelete = { _id: new ObjectId(id)};
+            const idToDelete = { _id: new ObjectId(id), userLogin: req.session.user.login };
             const removedItem = await TodoListService.deleteTodoItem(idToDelete);
             if (removedItem && removedItem.deletedCount) {
                     res.status(202).send(`Successfully removed todoItem with id ${id}`);
