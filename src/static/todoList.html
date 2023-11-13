@@ -1,0 +1,50 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="static/login.css">
+</head>
+
+<body>
+    <form action="api/todoList/item" method="post">
+        <h2>add todo item</h2>
+        <div class="input-field">
+            <input type="text" name="title" id="title" placeholder="enter title">
+        </div>
+        <div class="input-field">
+            <input type="text" name="category" id="category" placeholder="enter category">
+        </div>
+        <div class="input-field">
+            <input type="text" name="description" id="description" placeholder="enter description">
+        </div>
+        <input type="submit" value="add new todo item!">
+    </form>
+
+    <form action="api/todoList/item" method="post">
+        <h2>update todo item</h2>
+        <input type="hidden" id="action" name="action" value="put" />
+        <div class="input-field">
+            <input type="text" name="id" id="id" placeholder="enter item id">
+        </div>
+        <div class="input-field">
+            <input type="text" name="title" id="title" placeholder="enter title">
+        </div>
+        <div class="input-field">
+            <input type="text" name="category" id="category" placeholder="enter category">
+        </div>
+        <div class="input-field">
+            <input type="text" name="description" id="description" placeholder="enter description">
+        </div>
+        <input type="submit" value="update todo item!">
+    </form>
+
+    <form action="api/todoList/item" method="post">
+        <h2>delete todo item</h2>
+        <input type="hidden" id="action" name="action" value="delete" />
+        <div class="input-field">
+            <input type="text" name="id" id="id" placeholder="enter item id">
+        </div>
+        <input type="submit" value="delete todo item!">
+    </form>
+</body>
+
+</html>

@@ -8,6 +8,7 @@ export enum CATEGORY {
 
 export interface TodoItem extends WithId<Document> {
     _id: ObjectId;
+    userLogin?: string;
     title?: string;
     category?: CATEGORY;
     description?: string;

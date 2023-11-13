@@ -31,14 +31,14 @@ connectToDatabase()
 
         app.get('/', (req, res) => {
             if (req.session.user) {
-                res.send(`Hello ${req.session.user}!`);
+                res.send(`Hello ${req.session.user.login}!`);
             } else {
                 res.sendFile('static/login.html', {root: __dirname});
             }
         });
-        app.get('/new', (req, res) => {
+        app.get('/todoList', (req, res) => {
             if (req.session.user) {
-                res.sendFile('static/addTodo.html', {root: __dirname});
+                res.sendFile('static/todoList.html', {root: __dirname});
             } else {
                 res.sendFile('static/login.html', {root: __dirname});
             }
