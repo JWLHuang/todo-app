@@ -1,0 +1,27 @@
+body {
+    display: flex;
+    justify-content: center;
+    margin-top: 20%;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-field {
+    position: relative;
+    margin-top: 5%;
+}
+
+.input-field input {
+    padding: 0.8rem;
+}
+
+form input[type="submit"] {
+    background: black;
+    color: white;
+    border-radius: 4px;
+    margin-top: 2rem;
+    padding: 0.8rem;
+}

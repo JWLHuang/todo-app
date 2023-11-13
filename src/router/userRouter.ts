@@ -6,6 +6,32 @@ import { User } from "../model/user";
 export const userRouter = express.Router();
 userRouter.use(express.json());
 
+userRouter.post('/login', async (req: Request, res: Response) => {
+    const { login, password } = req.body;
+    const loggedInUser = await UserService.verifyLogin(login, password);
+    if (!loggedInUser) {
+        res.status(401).send(`Failed to login`);
+    } else {
+        if (!req.session.user) {
+            req.session.user = {
+                login: loggedInUser.login,
+                role: loggedInUser.role,
+            };
+        }
+        console.log(req.session);
+        res.status(200).send(`Logged in as user ${login}`)
+    }
+});
+
+userRouter.get('/logout', async (req: Request, res: Response) => {
+    if (req.session.user) {
+        delete req.session.user;
+        res.status(200).send('Logged out!');
+    } else {
+        res.status(201).send('You are already logged out!');
+    }
+});
+
 userRouter.get('/', async (req: Request, res: Response) => {
     try {
         console.log("Successfully reached user page");

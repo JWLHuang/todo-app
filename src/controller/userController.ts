@@ -45,3 +45,9 @@ export const deleteUser = async (id: mongoDB.Filter<mongoDB.BSON.Document>): Pro
 const hashPassword = (password: string): string => {
     return bcrypt.hashSync(password, 10);
 }
+
+export const verifyLogin = async (login: string, password: string): Promise<User> => {
+    const user = await collections.userList.findOne({login: `${login}`}) as User;
+    if (!user || bcrypt.compareSync(password, user.password) == false) return null;
+    return user;
+}
