@@ -4,16 +4,62 @@
 
 ```
 $ npm run install
-$ npm run start
+$ npm run dev
 ```
 
+The service will then be available at http://localhost:3000/.
+
+From the UI, you can:
+
+- Login and logout
+- After login: create, update, or delete todo items at http://localhost:3000/todoList
+- View all todo items at http://localhost:3000/api/todoList
+  - Advanced search using `http://localhost:3000/api/todoList?<queryKey1>=<queryValue1>&<queryKey2>=<queryValue2>`
+  - Advanced search supports filtering by userLogin, title, category, description, and isCompleted
+
+Not available from UI:
+
+- Creating, updating, or deleting users. Please see below for how to call API to do it.
+
 ## calling the api
+
+### Register a new user
+
+```
+curl -X POST -H 'Content-Type: application/json' \
+-d '{ "login":"<username>", "password":"<password>", "role":"USER"}' \
+http://localhost:3000/api/user/new -i
+```
+
+### Update an existing user
+
+```
+curl -X PUT -H 'Content-Type: application/json' \
+-d '{ "login":"<new username>", "password":"<new password>", "role":"USER"}' \
+http://localhost:3000/api/user/<_id> -i
+```
+
+### Delete an existing user
+
+```
+curl -X DELETE http://localhost:3000/api/user/<_id> -i
+```
+
+### List all users
+
+```
+curl http://localhost:3000/api/user -i
+```
+
+(or just go here: http://localhost:3000/api/user)
 
 ### Get the todolist
 
 ```
 $ curl http://localhost:3000/api/todoList -i
 ```
+
+(or just go here: http://localhost:3000/api/todoList)
 
 ## stack/technologies used
 
