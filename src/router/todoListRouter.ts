@@ -1,13 +1,14 @@
 import express, { Request, Response } from "express";
-import { TodoItem } from "./model/todoItem";
-import * as CrudService from "./crud/service";
+import { TodoItem } from "../model/todoItem";
+import * as CrudService from "../controller/todoListController";
 import { ObjectId } from "mongodb";
 
-export const router = express.Router();
-router.use(express.json())
+export const todoListRouter = express.Router();
+todoListRouter.use(express.json());
 
-router.get('/', async (req: Request, res: Response) => {
+todoListRouter.get('/', async (req: Request, res: Response) => {
     try {
+
         const todoList = await CrudService.getTodoList();
         res.status(200).send(todoList);
     } catch (e) {
@@ -15,7 +16,7 @@ router.get('/', async (req: Request, res: Response) => {
     }
 });
 
-router.get('/:id' , async (req: Request, res: Response) => {
+todoListRouter.get('/:id' , async (req: Request, res: Response) => {
     try {
         const id = req.params.id;
         const query = { _id: new ObjectId(id) };
@@ -26,7 +27,7 @@ router.get('/:id' , async (req: Request, res: Response) => {
     }
 });
 
-router.post('/new', async (req: Request, res: Response) => {
+todoListRouter.post('/new', async (req: Request, res: Response) => {
     try {
         const {title, category, description} = req.body;
         const TodoItemToAdd = await CrudService.addTodoItem(title, category, description);
@@ -36,7 +37,7 @@ router.post('/new', async (req: Request, res: Response) => {
     }
 });
 
-router.put('/:id', async (req: Request, res: Response) => {
+todoListRouter.put('/:id', async (req: Request, res: Response) => {
     try {
         const id: string = req.params.id;
         const query = { _id: new ObjectId(id) };
@@ -48,7 +49,7 @@ router.put('/:id', async (req: Request, res: Response) => {
     }
 });
 
-router.delete('/:id', async (req: Request, res: Response) => {
+todoListRouter.delete('/:id', async (req: Request, res: Response) => {
     try {
         const id: string = req.params.id;
         const idToDelete = { _id: new ObjectId(id)};

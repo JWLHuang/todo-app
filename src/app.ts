@@ -1,15 +1,16 @@
 import express from 'express';
-import * as CrudService from './crud/service';
-import { router } from './router';
+import { connectToDatabase } from './db';
+import { todoListRouter } from './router/todoListRouter';
+import { userRouter } from './router/userRouter';
 
-// app
 const port = 3000;
 const app = express();
 app.use(express.json());
 
-CrudService.connectToDatabase()
+connectToDatabase()
     .then(() => {
-        app.use('/api/todoList', router);
+        app.use('/api/todoList', todoListRouter);
+        app.use('/api/user', userRouter);
 
         app.get('/', (req, res) => {
             res.send('Hello World!');
