@@ -80,8 +80,8 @@ const deleteItem = async (req: Request, res: Response) => {
     try {
         if (req.session.user) {
             const id = req.body.id;
-            const idToDelete = { _id: new ObjectId(id), userLogin: req.session.user.login };
-            const removedItem = await TodoListService.deleteTodoItem(idToDelete);
+            const deleteQuery = { _id: new ObjectId(id), userLogin: req.session.user.login };
+            const removedItem = await TodoListService.deleteTodoItem(deleteQuery);
             if (removedItem && removedItem.deletedCount) {
                     res.status(202).send(`Successfully removed todoItem with id ${id}`);
                 } else if (!removedItem) {

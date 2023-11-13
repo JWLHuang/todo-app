@@ -45,6 +45,15 @@
         </div>
         <input type="submit" value="delete todo item!">
     </form>
+
+    <form action="/api/todoList" method="get">
+        <h2>view todo list for:</h2>
+        <div class="input-field">
+            <input type="text" name="userLogin" id="userLogin" placeholder="enter userLogin">
+        </div>
+        <input type="submit" value="search">
+    </form>
+    <form action="/api/user/logout" method="get"><input type="submit" value="logout"></form>
 </body>
 
 </html>

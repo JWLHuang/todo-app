@@ -18,8 +18,7 @@ userRouter.post('/login', async (req: Request, res: Response) => {
                 role: loggedInUser.role,
             };
         }
-        console.log(req.session);
-        res.status(200).send(`Logged in as user ${login}`)
+        res.redirect('/todoList');
     }
 });
 
