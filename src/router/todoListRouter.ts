@@ -8,12 +8,7 @@ todoListRouter.use(express.json());
 
 todoListRouter.get('/', async (req: Request, res: Response) => {
     try {
-        let todoList = [];
-        if (req.session.user) {
-            todoList = await TodoListService.getTodoList(req.session.user.login);
-        } else {
-            todoList = await TodoListService.getTodoList();
-        }
+        const todoList = await TodoListService.getTodoList({...req.query});
         res.status(200).send(todoList);
     } catch (e) {
         res.status(500).send(e.message);

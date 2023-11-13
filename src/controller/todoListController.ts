@@ -2,9 +2,8 @@ import * as mongoDB from "mongodb";
 import { CATEGORY, TodoItem } from "../model/todoItem";
 import { collections } from "../db";
 
-export const getTodoList = async (userLogin?: string): Promise<TodoItem[]> => {
-    const findFilter = userLogin ? { userLogin } : {};
-    return await collections.todoList.find(findFilter).toArray();
+export const getTodoList = async (findQuery = {}): Promise<TodoItem[]> => {
+    return await collections.todoList.find(findQuery).toArray();
 }
 
 export const findTodoItem = async (_id: mongoDB.Filter<mongoDB.BSON.Document>): Promise<TodoItem> => {
